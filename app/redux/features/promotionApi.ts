@@ -1,8 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from 'js-cookie';
 
 export const promotionApi = createApi({
   reducerPath: "promotionApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/promotions" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/promotions",
+    prepareHeaders: (headers, { getState }) => {
+        const token = Cookies.get('authToken');
+        if (token) {
+          headers.set('Authorization', `Bearer ${token}`);
+        }
+        return headers;
+      },
+
+   }),
   endpoints: (builder) => ({
     createPromotion: builder.mutation({
       query: (data) => ({

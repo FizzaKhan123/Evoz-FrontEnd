@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, ChangeEventHandler } from "react";
 import { 
   useCreatePromotionMutation, 
   useUpdatePromotionMutation 
-} from "../../redux/features/promotionApi";
+} from "../../../redux/features/promotionApi";
 
-export default function PromotionForm({ trainerId, promotion }) {
+export default function PromotionForm({ trainerId , promotion  }:any) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -35,7 +35,7 @@ export default function PromotionForm({ trainerId, promotion }) {
     }
   }, [promotion]);
 
-  const handleChange = (e) => {
+  const handleChange = (e : any  ) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
@@ -43,7 +43,7 @@ export default function PromotionForm({ trainerId, promotion }) {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e :React.FormEvent) => {
     e.preventDefault();
     const promoData = { ...formData, trainerId };
     if (promotion) {
